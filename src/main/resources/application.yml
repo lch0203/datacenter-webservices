@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.141.3:1521:ynou
+    username: ynou
+    password: ynou#321
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
