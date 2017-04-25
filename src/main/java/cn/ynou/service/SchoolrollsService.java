@@ -1,6 +1,7 @@
 package cn.ynou.service;
 
 import cn.ynou.model.PersonsOfStartYearAndSubject;
+import cn.ynou.model.PersonsOfSubject;
 import cn.ynou.model.Schoolrolls;
 import cn.ynou.model.SchoolroolsCount;
 import cn.ynou.repository.SchoolrollsRepository;
@@ -53,7 +54,7 @@ public class SchoolrollsService {
      * @param mRowNumber 显示前几行
      * @return
      */
-    public List<PersonsOfStartYearAndSubject> getNumberofPersonsWithYearAndSubject(String mDs, String mYear, Integer mRowNumber) {
+    public List<PersonsOfStartYearAndSubject> getPersonsWithYearAndSubject(String mDs, String mYear, Integer mRowNumber) {
         String sql = "SELECT * FROM (\n" +
                 "        SELECT STARTYEAR,SUBJECT,COUNT（*） AS persons \n" +
                 "        FROM SCHOOLROLLS\n" +
@@ -70,8 +71,33 @@ public class SchoolrollsService {
         } else {
             return null;
         }
+    }
+
+    /***
+     * 根据数据源（生源），统计专业招生情况前几（mRowNumber）名
+     * @param mDs
+     * @param mRowNumber
+     * @return
+     */
+    public List<PersonsOfSubject> getPersonsOfSubject(String mDs, Integer mRowNumber){
+        String sql = "SELECT * FROM (\n" +
+                "SELECT SUBJECT ,COUNT(*) AS persons FROM SCHOOLROLLS\n" +
+                "WHERE ds = ?\n" +
+                "GROUP BY SUBJECT\n" +
+                "ORDER BY persons DESC\n" +
+                ") temp\n" +
+                "WHERE ROWNUM <= ?";
+        List<PersonsOfSubject> list = jdbcTemplate.query(sql,
+                new PersonsOfSubjectRowMapper(),
+                new Object[]{mDs,mRowNumber});
+        if (list != null && list.size() > 0) {
+            return list;
+        } else {
+            return null;
+        }
 
     }
+
 
     /***
      * 得到Schoolrolls前几行数据
@@ -134,6 +160,17 @@ public class SchoolrollsService {
 
     public Long countByNameLike(String name) {
         return schoolrollsRepository.countByNameLike(name);
+    }
+
+
+    class PersonsOfSubjectRowMapper implements RowMapper<PersonsOfSubject>{
+        @Override
+        public PersonsOfSubject mapRow(ResultSet resultSet, int i) throws SQLException {
+            PersonsOfSubject personsOfSubject = new PersonsOfSubject();
+            personsOfSubject.setSubject(resultSet.getString("subject"));
+            personsOfSubject.setNumberOfPersons(resultSet.getInt("persons"));
+            return personsOfSubject;
+        }
     }
 
 
