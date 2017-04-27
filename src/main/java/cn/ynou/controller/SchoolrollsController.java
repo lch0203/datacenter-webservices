@@ -5,6 +5,7 @@ import cn.ynou.model.PersonsOfSubject;
 import cn.ynou.model.Schoolrolls;
 import cn.ynou.model.SchoolroolsCount;
 import cn.ynou.service.SchoolrollsService;
+import io.swagger.annotations.Api;
 import jdk.internal.instrumentation.InstrumentationTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/schoolrools")
+@Api(tags={"schoolrolls"})
+@CrossOrigin
 public class SchoolrollsController {
     @Autowired
     private SchoolrollsService schoolrollsService;

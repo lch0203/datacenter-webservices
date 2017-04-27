@@ -5,6 +5,8 @@ import cn.ynou.model.UserLogin;
 import cn.ynou.service.UserService;
 import cn.ynou.model.Tempusers;
 import cn.ynou.util.MD5Utils;
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags={"users"})
+@CrossOrigin
 public class UsersController {
 
     @Autowired
