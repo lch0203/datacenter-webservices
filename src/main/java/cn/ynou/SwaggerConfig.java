@@ -50,6 +50,7 @@ public class SwaggerConfig {
 		List<Tag> tags = new ArrayList<>();
 		tags.add(new Tag("schoolrolls", "schoolrolls operation"));
 		tags.add(new Tag("users", "users operation"));
+		tags.add(new Tag("listschoolinfo", "获取各分校学习点坐标及描述等信息"));
 		return tags.toArray(new Tag[tags.size()]);
 	}
 

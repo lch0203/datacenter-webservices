@@ -12,7 +12,6 @@ public interface SchoolrollsRepository extends JpaRepository<Schoolrolls,String>
     List<Schoolrolls> findByStudentid(String studentId);
     List<Schoolrolls> findByName(String name);
     Long countByName(String name);
-
     List<Schoolrolls> findByStudentidLike(String studentId);
     List<Schoolrolls> findByNameLike(String name);
     Long countByNameLike(String name);
