@@ -34,6 +34,7 @@ public class ListSchoolService {
 //    private JdbcTemplate jdbcTemplate;
 
     private static final String WEBSERVERADDRESS = "http://softdev.cmxy.ynou.edu.cn:8080/";
+    //private static final String WEBSERVERADDRESS = "http://127.0.0.1:8080/";
     private static final String IMGROOTPATH = WEBSERVERADDRESS + "img/";
     private static Map<String, String> imgMap;
 
@@ -65,15 +66,45 @@ public class ListSchoolService {
         return "default.jpg";
     }
 
+    //定义表格样式
+    private static final String TABLESTYLE = "table table-bordered table-striped table-hover table-condensed table-responsive";
+    //定义图片样式
+    private static final String IMAGESTYLE = "img-responsive center-block img-rounded ";
+
+    //定义html上半部分
+    private static final String HTMLHEAD = "<!DOCTYPE html>" +
+            "<html lang='zh-CN'>" +
+            "  <head>" +
+            "    <meta charset='utf-8'>" +
+            "    <meta http-equiv='X-UA-Compatible' content='IE=edge'>" +
+            "    <meta name='viewport' content='width=device-width, initial-scale=1'>" +
+            "    <title></title>" +
+            "    <link rel='stylesheet' href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>" +
+            "  </head>" +
+            "  <body>" +
+            "  <div class='container'>" +
+            //"   <table class = 'table table-bordered table-striped table-hover table-condensed table-responsive'>";
+            "   <table class = ''{0}''>";
+
+
+    //定义html下半部分
+    private static final String HTMLTAIL =  "   </table>" +
+            "  <div>" +
+            "  </body>" +
+            "</html>";
+
+
+
+
     private static final String YCYHTMLFRAGMENT =
             //"<table width=400 height=300 border=''1'' bgcolor= ''#fffff0'' style= ''border: beige''>" +
-            "<table width=400  height=300 border='1' bgcolor='#fffff0' style='border: beige'  >" +
-                    "  <tr>" +
+            //"<table width=400  height=300 border='1' bgcolor='#fffff0' style='border: beige'  >" +  IMAGESTYLE
+                    "  <tr class = 'info'>" +
                     "  <td width='100'><b>教学点名称：</b></td>" +
-                    "        <td>{0}</td>" +
+                    "        <td>{1}</td>" +
                     "  </tr>" +
                     "  <tr>" +
-                    "  <td width='400' colspan='2' height=200 > <img src= ''{1}'' height='200' width='400' alt = {2}/> </td>" +
+                    "  <td width='400' colspan='2' height=200 > <img class = ''{2}'' src= ''{3}'' height='200' width='400' alt = {4}/> </td>" +
                     "  </tr>" +
                     "" +
                     "  <tr>" +
@@ -81,47 +112,44 @@ public class ListSchoolService {
                     "  </tr>" +
                     "  <tr>" +
                     "  <td width='100'><b>2015秋</b></td>" +
-                    "        <td width='300'>{3}</td>" +
+                    "        <td width='300'>{5}</td>" +
                     "  </tr>" +
                     "  <tr>" +
                     "  <td width='100'><b>2015春</b></td>" +
-                    "        <td width='300'>{4}</td>" +
+                    "        <td width='300'>{6}</td>" +
                     "  </tr>" +
                     "  <tr>" +
                     "  <td width='100'><b>2016秋</b></td>" +
-                    "        <td width='300'>{5}</td>" +
-                    "  </tr>" +
-                    "" +
-                    "</table>";
+                    "        <td width='300'>{7}</td>" +
+                    "  </tr>";
+
 
     private static final String JXDHTMLFRAGMENT =
-            "<table width=400  height=300 border='1' bgcolor='#fffff0' style='border: beige'  >" +
-                    "    <tr>" +
+                    "    <tr class = 'info'>" +
                     "        <td><b>教学点名称</b></td>" +
-                    "        <td colspan='3'>{0}</td>" +
+                    "        <td colspan='3'>{1}</td>" +
                     "    </tr>" +
                     "    <tr>" +
-                    "        <td colspan='4'><img src=''{1}'' width='400' height='200' alt={2}></td>" +
+                    "        <td colspan='4'><img class = ''{2}'' src=''{3}'' width='400' height='200' alt={4}></td>" +
                     "    </tr>" +
                     "    <tr>" +
                     "        <td><b>教学点属性</b></td>" +
-                    "        <td colspan='3'>{3}</td>" +
+                    "        <td colspan='3'>{5}</td>" +
                     "    </tr>" +
                     "    <tr>" +
                     "        <td><b>教学点地址</b></td>" +
-                    "        <td colspan='3'>{4}</td>" +
+                    "        <td colspan='3'>{6}</td>" +
                     "    </tr>" +
                     "    <tr>" +
                     "        <td><b>联系人</b></td>" +
-                    "        <td>{5}</td>" +
+                    "        <td>{7}</td>" +
                     "        <td><b>电话</b></td>" +
-                    "        <td>{6}</td>" +
+                    "        <td>{8}</td>" +
                     "    </tr>" +
                     "    <tr>" +
                     "        <td><b>办学层次</b></td>" +
-                    "        <td colspan='3'>{7}</td>" +
-                    "    </tr>" +
-                    "</table>";
+                    "        <td colspan='3'>{9}</td>" +
+                    "    </tr>";
 
 
     private List<YnouJiaoxuedian> getListYnouJiaoxuedian() {
@@ -149,13 +177,15 @@ public class ListSchoolService {
             oneSchoolInfo.setSchool(temp.getName());
             oneSchoolInfo.setLatitude(temp.getWd().toString());
             oneSchoolInfo.setLongitude(temp.getJd().toString());
-            oneSchoolInfo.setInfomation(MessageFormat.format(YCYHTMLFRAGMENT,
-                    temp.getName(),  //{0}
-                    IMGROOTPATH + getImgPath(temp.getName()),  //{1}
-                    temp.getName(), //{2}
-                    temp.getPeriod1(), //{3}
-                    temp.getPeriod2(), //{4}
-                    temp.getPeriod3()));//{5}
+            oneSchoolInfo.setInfomation(MessageFormat.format(HTMLHEAD + YCYHTMLFRAGMENT + HTMLTAIL,
+                    TABLESTYLE,//{0}
+                    temp.getName(),   //{1}
+                    IMAGESTYLE,//{2}
+                    IMGROOTPATH + getImgPath(temp.getName()), //{3}
+                    temp.getName(), //{4}
+                    temp.getPeriod1(), //{5}
+                    temp.getPeriod2(), ////{6}
+                    temp.getPeriod3())); ////{7}
             listSchoolInfo.add(oneSchoolInfo);
         }
         //System.out.printf("getYcySchoolInfoList() length is :" + listSchoolInfo.size());
@@ -180,15 +210,17 @@ public class ListSchoolService {
             oneSchoolInfo.setSchool(temp.getName());
             oneSchoolInfo.setLatitude(temp.getWd().toString());
             oneSchoolInfo.setLongitude(temp.getJd().toString());
-            oneSchoolInfo.setInfomation(MessageFormat.format(JXDHTMLFRAGMENT,
-                    temp.getName(),
-                    IMGROOTPATH + getImgPath(temp.getName()),
-                    temp.getName(),
-                    temp.getAttribute(),
-                    temp.getAddress(),
-                    temp.getContact(),
-                    temp.getPhone(),
-                    getSchoolEduMode(temp)
+            oneSchoolInfo.setInfomation(MessageFormat.format(HTMLHEAD + JXDHTMLFRAGMENT + HTMLTAIL,
+                    TABLESTYLE, //0
+                    temp.getName(), //1
+                    IMAGESTYLE, //2
+                    IMGROOTPATH + getImgPath(temp.getName()),//3
+                    temp.getName(), //4
+                    temp.getAttribute(), //5
+                    temp.getAddress(), //6
+                    temp.getContact(), //7
+                    temp.getPhone(), //8
+                    getSchoolEduMode(temp) //9
             ));
             listSchoolInfo.add(oneSchoolInfo);
         }
