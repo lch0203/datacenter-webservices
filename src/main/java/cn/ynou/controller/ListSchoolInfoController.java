@@ -36,4 +36,9 @@ public class ListSchoolInfoController {
         return listSchoolService.getYcySchoolCoordinateListInfo();
     }
 
+    @GetMapping("/level2xy") //省属分校
+    public ListSchool getlevel2XueYuan(){
+        return listSchoolService.getLevel2XueYuanCoordinateListInfo();
+    }
+
 }
