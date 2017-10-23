@@ -194,7 +194,7 @@ public class ListSchoolService {
                     "        <td colspan='3'>{6}</td>" +
                     "    </tr>" +
                     "    <tr>" +   //  YTJS 待查
-                    "        <td><b>YTJS</b></td>" +
+                    "        <td><b>依托建设</b></td>" +
                     "        <td colspan='3'>{7}</td>" +
                     "    </tr>" +
                     "    </tr>" +
@@ -363,6 +363,9 @@ public class ListSchoolService {
     }
 
     private String formatLevel2SchoolPhone(String phone){
+        if(phone == null){
+            return " null ";
+        }
         if(phone.length() > 13){
             int index = phone.length() - 11;
             phone = new StringBuffer(phone).insert(phone.length() - index + 1," (").append(")").toString();
