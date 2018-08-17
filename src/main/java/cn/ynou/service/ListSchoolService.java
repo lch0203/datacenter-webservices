@@ -34,8 +34,9 @@ public class ListSchoolService {
 //    private JdbcTemplate jdbcTemplate;
 
     //private static final String WEBSERVERADDRESS = "http://softdev.cmxy.ynou.edu.cn:8080/";
-    private static final String WEBSERVERADDRESS = "http://192.168.131.84:8080/";
+    private static final String WEBSERVERADDRESS = "http://192.168.141.19:8080/";
     //定义表格样式
+//    private static final String TABLESTYLE = "table table-bordered table-striped table-hover table-condensed";
     private static final String TABLESTYLE = "table table-bordered table-striped table-hover table-condensed table-responsive";
     //定义图片样式
     private static final String IMAGESTYLE = "img-responsive center-block img-rounded ";
@@ -104,10 +105,11 @@ public class ListSchoolService {
             "    <meta http-equiv='X-UA-Compatible' content='IE=edge'>" +
             "    <meta name='viewport' content='width=device-width, initial-scale=1'>" +
             "    <title></title>" +
-            "    <link rel='stylesheet' href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>" +
+//            "    <link rel='stylesheet' href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>" +
+            "    <link rel='stylesheet' href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css'>" +
             "  </head>" +
-            "  <body>" +
-            "  <div class='container'>" +
+            "  <body  style= 'width:300px;'>" +
+            "  <div class='container'  style='width:450px'>" +
             //"   <table class = 'table table-bordered table-striped table-hover table-condensed table-responsive'>";
             "   <table class = ''{0}''>";
 
